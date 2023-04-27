@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2023-04-27T09:41:47Z</date>
+    <groups>
+        <group>
+            <name>Custom templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Custom Template Check Unseen Mail Time</template>
+            <name>Custom Template Check Unseen Mail Time</name>
+            <groups>
+                <group>
+                    <name>Custom templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Mailbox</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>Unseen seconds</name>
+                    <key>vfs.file.contents[{$RESULT_PATH}]</key>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>Mailbox</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;{$MAX_UNSEEN_DURATION}</expression>
+                            <name>Входящие письма не разобраны {$MAX_UNSEEN_DURATION} секунд</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <macros>
+                <macro>
+                    <macro>{$MAX_UNSEEN_DURATION}</macro>
+                    <value>600</value>
+                    <description>sec</description>
+                </macro>
+                <macro>
+                    <macro>{$RESULT_PATH}</macro>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
